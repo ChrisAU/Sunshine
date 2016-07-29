@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.BoolRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -59,15 +60,32 @@ public class ForecastFragment extends Fragment {
             return shortenedDateFormat.format(time);
         }
 
+        private double getImperialValueFromMetric(double metric) {
+            return (metric * 1.8) + 32;
+        }
+
         /**
          * Prepare the weather high/lows for presentation.
          */
         private String formatHighLows(double high, double low) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String metricType = getString(R.string.pref_unit_metric);
+            String imperialType = getString(R.string.pref_unit_imperial);
+            String unitType = sharedPreferences.getString(getString(R.string.pref_unit_key), metricType);
+
+            if (unitType.equals(imperialType)) {
+                high = getImperialValueFromMetric(high);
+                low = getImperialValueFromMetric(low);
+            } else if (!unitType.equals(metricType)) {
+                Log.d(LOG_TAG, "Unit type not found: " + unitType);
+            }
+
             // For presentation, assume the user doesn't care about tenths of a degree.
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
 
             String highLowStr = roundedHigh + "/" + roundedLow;
+
             return highLowStr;
         }
 
