@@ -9,9 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ShareActionProvider;
+import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,15 @@ public class DetailActivity extends AppCompatActivity {
         return true;
     }
 
+    private void openShareDialog() {
+        TextView textView = (TextView)this.findViewById(R.id.detail_text);
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, textView.getText());
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -38,6 +48,9 @@ public class DetailActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        } else if (id == R.id.action_share) {
+            openShareDialog();
             return true;
         }
 
