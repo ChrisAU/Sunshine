@@ -31,7 +31,7 @@ public class DetailActivityFragment extends Fragment {
                        }
 
                             return rootView;
-        
+
         //return inflater.inflate(R.layout.fragment_detail, container, false);
     }
 }
