@@ -55,10 +55,10 @@ public class DetailActivityFragment extends Fragment {
     }
 
     private Intent createShareForecastIntent() {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, mForecastStr + FORECAST_SHARE_HASHTAG);
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
         sendIntent.setType("text/plain");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, mForecastStr + FORECAST_SHARE_HASHTAG);
         return sendIntent;
     }
 }
