@@ -31,9 +31,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private void openShareDialog() {
         TextView textView = (TextView)this.findViewById(R.id.detail_text);
+        final String hashTag = "#SunshineApp";
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, textView.getText());
+        sendIntent.putExtra(Intent.EXTRA_TEXT, textView.getText() + " " + hashTag);
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
